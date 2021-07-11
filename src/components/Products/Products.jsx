@@ -10,7 +10,7 @@ import useStyles from './styles';
 //    { id: 3, name: 'Dyson v7', description: 'Used <2 years, some scratches on the sticker', price: '$160', image: 'https://images-na.ssl-images-amazon.com/images/I/91H6nHdsl4L._AC_SL1500_.jpg' },
 //];
 
-const Products = ({ products }) => {
+const Products = ({ products, onAddToCart }) => {
     const classes = useStyles();
 
     return (
@@ -19,7 +19,7 @@ const Products = ({ products }) => {
             <Grid container justify="center" spacing={4}>
                 {products.map((product) => (
                     <Grid item key={product.id} xs={12} sm={6} md={4} lg={3}>
-                        <Product product={product} />
+                        <Product product={product} onAddToCart={onAddToCart} />
                     </Grid>
                 ))}
             </Grid>
