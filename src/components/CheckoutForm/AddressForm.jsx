@@ -15,10 +15,13 @@ const AddressForm = ({ checkoutToken }) => {
     const [shippingOption, setShippingOption] = useState('');
     const methods = useForm();
 
+    const countries = Object.entries(shippingCountries).map(([code, name]) => ({ id: code, label: name}))
+    
     const fetchShippingCountries = async (checkoutTokenId) => {
         const { countries } = await commerce.services.localeListShippingCountries(checkoutTokenId);
 
         setShippingCountries(countries);
+        setShippingCountry(Object.keys(countries)[0]);
     }
 
     useEffect(() => {
@@ -37,15 +40,17 @@ const AddressForm = ({ checkoutToken }) => {
                         <FormInput required name='email' label='Email' />
                         <FormInput required name='city' label='City' />
                         <FormInput required name='zip' label='ZIP / Postal code' />
-                        {/*<Grid item XS={12} sm={6}>
+                        <Grid item XS={12} sm={6}>
                             <InputLabel>Shipping Country</InputLabel>
-                            <Select value={} fullWidth onChange={}>
-                                <MenuItem key={} value={}>
-                                    Select Me
-                                </MenuItem>
+                            <Select value={shippingCountry} fullWidth onChange={(e) => setShippingCountry(e.target.value)}>
+                                {countries.map((country) => (
+                                    <MenuItem key={country.id} value={country.id}>
+                                        {country.label}
+                                    </MenuItem>
+                                ))}
                             </Select>
                         </Grid>
-                        <Grid item XS={12} sm={6}>
+                        {/*<Grid item XS={12} sm={6}>
                             <InputLabel>Shipping Subdivision</InputLabel>
                             <Select value={} fullWidth onChange={}>
                                 <MenuItem key={} value={}>
